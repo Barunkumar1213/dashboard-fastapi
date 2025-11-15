@@ -1,0 +1,30 @@
+{
+  "users": [
+    {
+      "id": "4831c6bd-7b96-40e2-a874-1f1ee6b03775",
+      "name": "Barun Kumar",
+      "email": "baruntiwari1213@gmail.com",
+      "role": "user",
+      "password": "$2b$12$Rg8kLuhTCOadUcWWtdSJEeTzfqYO/RvKVPjrrJbnmFB4iY5XlR36W",
+      "created_at": "2025-11-15 09:20:19.459223"
+    },
+    {
+      "id": "5ebe6f59-aeda-40ac-9510-678f8a8e73e1",
+      "name": "barun",
+      "email": "baruntiwari1213@gmail.com.com",
+      "role": "admin",
+      "password": "$2b$12$.uYHoHExIh7.vF6EYPGy0uia6ScG/wym8f3ckl/6x2rZN5SLOWfom",
+      "created_at": "2025-11-15 09:42:29.142456"
+    }
+  ],
+  "notes": [
+    {
+      "id": "330d0433-8da2-484f-85da-379286d7a6d6",
+      "title": "test",
+      "description": "demo",
+      "user_id": "4831c6bd-7b96-40e2-a874-1f1ee6b03775",
+      "created_at": "2025-11-15 14:55:45.231902",
+      "updated_at": "2025-11-15 14:55:45.231902"
+    }
+  ]
+}

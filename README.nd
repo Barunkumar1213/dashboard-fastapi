@@ -1,0 +1,219 @@
+
+```markdown
+# Notes App - Backend
+
+A FastAPI-based REST API for managing notes with user authentication and admin functionality.
+
+## Features
+
+- 🔐 JWT-based authentication
+- 📝 CRUD operations for notes
+- 👥 Role-based access control (user/admin)
+- 🛡️ Admin endpoints for managing all data
+- 📊 User management
+- 🔒 Secure password hashing
+- 🌐 CORS support for frontend
+
+## Tech Stack
+
+- **Framework**: FastAPI
+- **Language**: Python 3.8+
+- **Database**: JSON file storage (easily replaceable)
+- **Authentication**: JWT tokens
+- **Password Hashing**: bcrypt
+- **Validation**: Pydantic models
+
+## Prerequisites
+
+- Python 3.8 or higher
+- pip (Python package manager)
+
+## Installation
+
+1. Navigate to the backend directory:
+   ```bash
+   cd backend
+
+Install dependencies:
+```bash
+pip install -r requirements.txt
+
+
+Running the Application
+Start the development server
+```bash
+python main.py
+
+
+The API will be available at:
+http://localhost:8000
+
+
+API Documentation:
+Swagger UI: http://localhost:8000/docs
+ReDoc: http://localhost:8000/redoc
+
+API Endpoints
+Authentication (/api/auth)
+POST /api/auth/signup - Register new user
+POST /api/auth/login - User login
+GET /api/auth/me - Get current user profile
+Notes (/api/notes)
+GET /api/notes/ - Get user's notes (admin sees all)
+POST /api/notes/ - Create new note
+GET /api/notes/{id} - Get specific note
+PUT /api/notes/{id} - Update note
+DELETE /api/notes/{id} - Delete note
+Admin (/api/admin) - Admin Only
+GET /api/admin/notes - Get all notes from all users
+PUT /api/admin/notes/{id} - Update any note
+DELETE /api/admin/notes/{id} - Delete any note
+GET /api/admin/users - Get all users
+Creating Admin Users
+Method 1: Update Existing User
+Stop the backend server
+Open 
+database.json
+Find the user you want to make admin
+Change "role": "user" to "role": "admin"
+Restart the backend server
+Example:
+
+{
+  "id": "user-uuid-here",
+  "name": "Admin User",
+  "email": "admin@example.com",
+  "role": "admin",  // Changed from "user"
+  "password": "$2b$12$hashed-password",
+  "created_at": "2025-11-15 09:20:19.459223"
+}
+
+Method 2: Create New Admin User
+Register a new user through the frontend
+Follow Method 1 to update their role to admin
+Or manually add to 
+database.json
+Method 3: Direct API Call
+
+curl -X POST http://localhost:8000/api/auth/signup \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Admin User",
+    "email": "admin@example.com",
+    "password": "admin123",
+    "role": "admin"
+  }'
+
+  Testing Admin Functionality
+Step 1: Create Admin User
+Use any method above to create an admin user.
+
+Step 2: Login as Admin
+
+curl -X POST http://localhost:8000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "admin@example.com",
+    "password": "admin123"
+  }'
+
+  Save the access_token from the response.
+
+Step 3: Test Admin Endpoints
+# Get all notes (admin only)
+curl -X GET http://localhost:8000/api/admin/notes \
+  -H "Authorization: Bearer YOUR_TOKEN"
+
+# Get all users (admin only)
+curl -X GET http://localhost:8000/api/admin/users \
+  -H "Authorization: Bearer YOUR_TOKEN"
+
+# Delete any note (admin only)
+curl -X DELETE http://localhost:8000/api/admin/notes/NOTE_ID \
+  -H "Authorization: Bearer YOUR_TOKEN"
+
+Project Structure
+
+backend/
+├── main.py                 # FastAPI application entry point
+├── requirements.txt        # Python dependencies
+├── database.json          # JSON database storage
+├── models/                # Pydantic models
+│   ├── user.py           # User models
+│   └── note.py           # Note models
+├── routers/              # API route handlers
+│   ├── auth.py           # Authentication endpoints
+│   ├── notes.py          # Notes endpoints
+│   └── admin.py          # Admin endpoints
+└── database/             # Database operations
+    └── db_file.py        # JSON file database handler
+
+Database Schema
+
+{
+  "id": "uuid",
+  "name": "string",
+  "email": "string",
+  "role": "user|admin",
+  "password": "bcrypt_hash",
+  "created_at": "datetime"
+}
+
+{
+  "id": "uuid",
+  "title": "string",
+  "description": "string",
+  "user_id": "uuid",
+  "created_at": "datetime",
+  "updated_at": "datetime"
+}
+
+Security Features
+Password Hashing: All passwords are hashed using bcrypt
+JWT Authentication: Secure token-based authentication
+Role-Based Access: Admin-only endpoints protected
+CORS: Configured for frontend integration
+Input Validation: Pydantic models validate all inputs
+Environment Variables
+Create a .env file in the backend root:
+
+SECRET_KEY=your-secret-key-here
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=30
+
+
+Troubleshooting
+Common Issues
+"Admin access required" error:
+Verify user role is "admin" in database
+Check JWT token is valid
+Ensure using correct admin endpoints
+Database errors:
+Check 
+database.json
+ file permissions
+Verify JSON syntax is correct
+Ensure unique IDs for users and notes
+CORS issues:
+Verify frontend URL in CORS configuration
+Check both frontend and backend are running
+Development Tips
+Use Swagger UI (/docs) to test endpoints
+Check browser Network tab for API errors
+Verify JWT token in Authorization header
+Use Postman or curl for API testing
+Production Deployment
+Environment Setup
+Set environment variables
+Use proper database (PostgreSQL, MongoDB)
+Configure HTTPS
+Set up proper logging
+Use process manager (gunicorn, uvicorn)
+Security Considerations
+Use environment variables for secrets
+Implement rate limiting
+Add input sanitization
+Use HTTPS in production
+Regular security updates
+License
+MIT License
