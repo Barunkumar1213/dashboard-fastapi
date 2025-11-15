@@ -5,6 +5,7 @@ import bcrypt
 from datetime import datetime, timedelta
 from typing import Optional
 import uuid
+import os
 
 from models.user import UserCreate, UserResponse, UserLogin, Token, TokenData
 from database.db_file import db
@@ -12,9 +13,9 @@ from database.db_file import db
 router = APIRouter()
 security = HTTPBearer()
 
-SECRET_KEY = "your-secret-key-here-change-in-production"
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+SECRET_KEY = os.getenv("SECRET_KEY", "my-super-secret-key-for-notes-app-12345")
+ALGORITHM = os.getenv("ALGORITHM", "HS256")
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "30"))
 
 
 # -----------------------------------------------------
