@@ -7,12 +7,7 @@ app = FastAPI(title="Notes API", version="1.0.0")
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",  # Local development
-        "https://dashboard-fastapi.vercel.app",  # Vercel backend (for self)
-        "https://your-frontend-domain.vercel.app",  # Replace with your frontend domain
-        "https://localhost:3000"  # HTTPS local development
-    ],
+    allow_origins=["*"],  # Allow all origins (not recommended for production)
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
