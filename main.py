@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers import auth, notes, admin
-from mangum import Mangum
 import os
 
 app = FastAPI(title="Notes API", version="1.0.0")
@@ -25,8 +24,6 @@ app.include_router(notes.router, prefix="/api/notes", tags=["notes"])
 app.include_router(admin.router, prefix="/api/admin", tags=["admin"])
 
 @app.get("/")
-def root():
-    return {"message": "Notes API is running"}
 
 @app.get("/debug")
 def debug():
@@ -36,10 +33,9 @@ def debug():
         "algorithm": ALGORITHM,
         "token_expire_minutes": ACCESS_TOKEN_EXPIRE_MINUTES
     }
-# def root():
-#     return {"message": "Notes API is running"}
+def root():
+    return {"message": "Notes API is running"}
 
-# if __name__ == "__main__":
-#     import uvicorn
-#     uvicorn.run(app, host="0.0.0.0", port=8000)
-handler = Mangum(app)
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
