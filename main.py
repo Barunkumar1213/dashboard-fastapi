@@ -2,8 +2,13 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers import auth, notes, admin
 from mangum import Mangum
+import os
 
 app = FastAPI(title="Notes API", version="1.0.0")
+
+SECRET_KEY = os.getenv("SECRET_KEY", "my-super-secret-key-for-notes-app-12345")
+ALGORITHM = os.getenv("ALGORITHM", "HS256")
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "30"))
 
 # Configure CORS
 app.add_middleware(
