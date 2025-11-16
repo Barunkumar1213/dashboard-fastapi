@@ -31,8 +31,8 @@ def debug():
         "algorithm": ALGORITHM,
         "token_expire_minutes": ACCESS_TOKEN_EXPIRE_MINUTES
     }
-def root():
-    return {"message": "Notes API is running"}
+# def root():
+#     return {"message": "Notes API is running"}
 
 # if __name__ == "__main__":
 #     import uvicorn
